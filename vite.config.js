@@ -1,13 +1,7 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
+// https://vite.dev/config/
 export default defineConfig({
-  root: 'src', // или путь к вашей папке с исходниками
-  build: {
-    outDir: '../dist' // или другой путь для сборки
-  },
-  server: {
-    host: '0.0.0.0', // чтобы приложение было доступно по сети
-    port: 5174 // или другой порт, если нужно
-  }
-});
-
+  plugins: [react()],
+})
