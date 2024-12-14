@@ -81,23 +81,25 @@ const Header = () => {
                 {
                     showMobile ?
                         <div className='mobile-menu'>
-                            <p className="side-title mb-3">
-                                Каталог товаров
-                            </p>
-                            {
-                                categories && categories.length && categories.map((cat, i) => (
-                                    <p
-                                        className={cat === active ? 'mb-1 category-active category-name' : "mb-1 category-name"}
-                                        key={i}
-                                        onClick={e => {
-                                            setActive(cat)
-                                            setShowMobile(!showMobile)
-                                        }}
-                                    >
-                                        {cat.name}
-                                    </p>
-                                ))
-                            }
+                            <div className="container">
+                                <p className="side-title mb-3">
+                                    Каталог товаров
+                                </p>
+                                {
+                                    categories && categories.length && categories.map((cat, i) => (
+                                        <p
+                                            className={cat === active ? 'mb-1 category-active category-name' : "mb-1 category-name"}
+                                            key={i}
+                                            onClick={e => {
+                                                setActive(cat)
+                                                setShowMobile(!showMobile)
+                                            }}
+                                        >
+                                            {cat.name}
+                                        </p>
+                                    ))
+                                }
+                            </div>
                         </div>
                         : null
                 }
