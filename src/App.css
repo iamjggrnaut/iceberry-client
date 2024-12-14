@@ -401,7 +401,7 @@
   display: none;
 }
 
-@media screen and (max-width: 415px) {
+@media screen and (max-width: 460px) {
 
   .phone-icon,
   .mail-icon {
