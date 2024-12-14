@@ -95,7 +95,7 @@ const Header = () => {
                                                 setShowMobile(!showMobile)
                                             }}
                                         >
-                                            {cat.name}
+                                            {cat.name || ''}
                                         </p>
                                     ))
                                 }
