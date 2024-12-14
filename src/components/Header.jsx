@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import logo from '../assets/logoicon.png'
 import { HiPhone } from "react-icons/hi2";
 import { FaEnvelope, FaCartShopping } from "react-icons/fa6";
@@ -11,9 +11,16 @@ import { MdDelete } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { ServiceFunctions } from '../service/serviceFunctions';
 
+import { IoIosMenu } from "react-icons/io";
+import AuthContext from '../service/AuthContext';
+
+
 
 
 const Header = () => {
+
+
+    const { data, setData, categories, setCategories, active, setActive, pageAmount, chunk, pageNum, detailed, setDetailed } = useContext(AuthContext)
 
     const [show, setShow] = useState(false)
 
@@ -39,19 +46,26 @@ const Header = () => {
     console.log(cart);
 
 
+    const [showMobile, setShowMobile] = useState(false)
+
     return (
         <div className='navpanel'>
             <div className="navcontainer container">
-                <h1>
+                <h1 className='title'>
                     <img src={logo} alt="" />
                     <span className='fs-3 fw-bold' onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>ICEBERRY SHOP</span>
                 </h1>
                 <div className='navlinks'>
-                    <span className='nav-icon'>
+                    <span className='nav-icon phone-icon'>
                         <HiPhone />
                     </span>
-                    <span className='nav-icon'>
+                    <span className='nav-icon mail-icon'>
                         <FaEnvelope />
+                    </span>
+                    <span className='nav-icon mobmenu'
+                        onClick={e => setShowMobile(!showMobile)}
+                    >
+                        <IoIosMenu />
                     </span>
                     <span className='nav-icon cart-icon' onClick={handleShow}>
                         <div className="cart-counter">
@@ -64,6 +78,26 @@ const Header = () => {
                         <FaCartShopping />
                     </span>
                 </div>
+                {
+                    showMobile ?
+                        <div className='mobile-menu'>
+                            {
+                                categories && categories.length && categories.map((cat, i) => (
+                                    <p
+                                        className={cat === active ? 'mb-1 category-active category-name' : "mb-1 category-name"}
+                                        key={i}
+                                        onClick={e => {
+                                            setActive(cat)
+                                            setShowMobile(!showMobile)
+                                        }}
+                                    >
+                                        {cat.name}
+                                    </p>
+                                ))
+                            }
+                        </div>
+                        : null
+                }
             </div>
 
             <Modal show={show} onHide={handleClose}>

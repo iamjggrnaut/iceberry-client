@@ -2,6 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import { URL } from "./config";
 import { jwtDecode } from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
+import { ServiceFunctions } from "./serviceFunctions";
 
 const AuthContext = createContext()
 
@@ -55,11 +56,79 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('dashboard')
     }
 
+
+
+
+
+    const [data, setData] = useState([])
+
+    const [categories, setCategories] = useState([])
+    const [active, setActive] = useState()
+    useEffect(() => {
+        ServiceFunctions.getCategories().then(data => {
+            setCategories(data)
+        })
+    }, [])
+
+    useEffect(() => {
+        setActive(categories[0])
+    }, [categories.length])
+
+
+    useEffect(() => {
+        if (active) {
+            ServiceFunctions.getProductsByCategory(active?.id).then(data => setData(data))
+        }
+    }, [active])
+
+    const [pageAmount, setPageAmount] = useState(1)
+    const [pageNum, setPageNum] = useState(1)
+    useEffect(() => {
+        let num = data ? Math.ceil(data.length / 18) : 1
+        setPageAmount(num)
+    }, [data])
+
+    const [chunk, setChunck] = useState([])
+    useEffect(() => {
+        if (pageNum === 1 && data.length) {
+            const arr = data ? data.slice(0, pageNum * 18) : []
+            setChunck(arr)
+        }
+        else {
+            const arr = data && data.length ? data.slice((pageNum - 1) * 18, pageNum * 18) : []
+            setChunck(arr)
+
+        }
+    }, [data, pageNum])
+
+    const [detailed, setDetailed] = useState(null)
+
+
+
+
+
+
+
+
     const contextData = {
         login: login,
         logout: logout,
         user: user,
         authToken: authToken,
+        data: data,
+        categories: categories,
+        setCategories: setCategories,
+        setData: setData,
+        detailed: detailed,
+        setDetailed: setDetailed,
+        pageAmount: pageAmount,
+        setPageAmount: setPageAmount,
+        pageNum: pageNum,
+        setPageNum: setPageNum,
+        chunk: chunk,
+        setChunck: setChunck,
+        active: active,
+        setActive: setActive
     }
 
     useEffect(() => {
@@ -70,6 +139,14 @@ export const AuthProvider = ({ children }) => {
         }, 6000)
         return () => clearInterval(interval)
     }, [])
+
+
+
+
+
+
+
+
 
     return (
         <AuthContext.Provider value={contextData}>

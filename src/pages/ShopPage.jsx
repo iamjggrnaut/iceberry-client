@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import SidePannel from '../components/SidePannel'
 import ProductCard from '../components/ProductCard'
 
@@ -7,56 +7,12 @@ import { addItem, removeItem, clearCart } from '../redux/features/cartSlice';
 
 import Modal from 'react-bootstrap/Modal';
 import { ServiceFunctions } from '../service/serviceFunctions';
+import AuthContext from '../service/AuthContext';
 
-// import { data } from '../products'
 
 const ShopPage = () => {
 
-    const [data, setData] = useState([])
-
-    const [categories, setCategories] = useState([])
-    const [active, setActive] = useState()
-    useEffect(() => {
-        ServiceFunctions.getCategories().then(data => {
-            setCategories(data)
-        })
-    }, [])
-
-    useEffect(() => {
-        setActive(categories[0])
-    }, [categories.length])
-
-
-    console.log(active);
-
-
-    useEffect(() => {
-        if (active) {
-            ServiceFunctions.getProductsByCategory(active?.id).then(data => setData(data))
-        }
-    }, [active])
-
-    const [pageAmount, setPageAmount] = useState(1)
-    const [pageNum, setPageNum] = useState(1)
-    useEffect(() => {
-        let num = data ? Math.ceil(data.length / 18) : 1
-        setPageAmount(num)
-    }, [data])
-
-    const [chunk, setChunck] = useState([])
-    useEffect(() => {
-        if (pageNum === 1 && data.length) {
-            const arr = data ? data.slice(0, pageNum * 18) : []
-            setChunck(arr)
-        }
-        else {
-            const arr = data && data.length ? data.slice((pageNum - 1) * 18, pageNum * 18) : []
-            setChunck(arr)
-
-        }
-    }, [data, pageNum])
-
-    const [detailed, setDetailed] = useState(null)
+    const { data, setData, categories, setCategories, active, setActive, setDetailed, pageAmount, detailed, chunk, pageNum } = useContext(AuthContext)
 
     const [show, setShow] = useState(false)
     const handleShow = () => setShow(true)
