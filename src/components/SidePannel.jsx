@@ -25,7 +25,7 @@ const SidePannel = ({ categories, active, setActive }) => {
                 </div>
             </div>
             <div>
-                <div className="side-links">
+                <div className="side-links mobile-hide">
                     <div className="side-link">О нас</div>
                     <div className="side-link">Контакты</div>
                     <div className="side-link">Информация для покупателей</div>

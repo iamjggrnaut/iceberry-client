@@ -397,6 +397,10 @@
   display: none;
 }
 
+.mobile-hide {
+  display: none;
+}
+
 @media screen and (max-width: 415px) {
 
   .phone-icon,
