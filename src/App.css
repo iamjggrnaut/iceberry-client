@@ -412,8 +412,28 @@
     display: flex;
   }
 
+  .admin-tabs,
+  .manage-buttons {
+    font-size: 10px !important;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .admin-tab,
+  .tab-active,
+  .neutral-btn {
+    max-width: 280px;
+  }
+
   .cart-icon {
     margin-right: 1rem;
+  }
+
+  .cart-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12px;
   }
 
   .sidepanel {

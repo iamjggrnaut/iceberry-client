@@ -45,7 +45,6 @@ const GoodsMajorTab = () => {
     const createProduct = (e, obj) => {
         const values = Object.values(obj)
         if (!values || values.length < 9) {
-            console.log('fuck off');
         }
         else {
             ServiceFunctions.createProduct(authToken, product).then(res => {
