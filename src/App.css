@@ -408,6 +408,10 @@
     display: none !important;
   }
 
+  .navlinks {
+    display: flex;
+  }
+
   .cart-icon {
     margin-right: 1rem;
   }
