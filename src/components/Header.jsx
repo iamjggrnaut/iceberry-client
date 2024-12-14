@@ -81,6 +81,9 @@ const Header = () => {
                 {
                     showMobile ?
                         <div className='mobile-menu'>
+                            <p className="side-title mb-3">
+                                Каталог товаров
+                            </p>
                             {
                                 categories && categories.length && categories.map((cat, i) => (
                                     <p
