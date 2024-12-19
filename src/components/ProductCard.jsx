@@ -20,24 +20,25 @@ const ProductCard = ({
         <div className='product-card'>
             <img className='card-image' src={imageLink} alt="" />
             <p className='card-title mb-1'>{name}</p>
-            <p className='card-weight mb-1'>Вес: {weight} гр.</p>
+            <p className='card-title mb-1'>Страна: {country}</p>
+            {/* <p className='card-weight mb-1'>Вес: {weight} гр.</p>
             <div className="card-price">
                 <div className="col"><span>Розница: </span><span className='fw-bold'>{retailPrice} руб.</span></div>
                 <div className="col"><span>Опт: </span><span className='fw-bold'>{wholesalePrice} руб.</span></div>
-            </div>
+            </div> */}
             <div className="card-btns">
                 <button className="secondary-btn col"
                     onClick={() => openDetails(target)}
                 >
-                    Подробнее
+                    Заказать
                 </button>
-                <button className="prime-btn col"
+                {/* <button className="prime-btn col"
                     onClick={e => {
                         addToCart(target)
                     }}
                 >
                     В корзину
-                </button>
+                </button> */}
             </div>
         </div>
     )

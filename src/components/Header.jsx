@@ -48,6 +48,7 @@ const Header = () => {
 
     const [showMobile, setShowMobile] = useState(false)
 
+
     return (
         <div className='navpanel'>
             <div className="navcontainer container">
@@ -56,12 +57,12 @@ const Header = () => {
                     <span className='fs-3 fw-bold' onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>ICEBERRY SHOP</span>
                 </h1>
                 <div className='navlinks'>
-                    <span className='nav-icon phone-icon'>
+                    <a href='tel:+79777520413' className='nav-icon phone-icon'>
                         <HiPhone />
-                    </span>
-                    <span className='nav-icon mail-icon'>
+                    </a>
+                    <a href='mailto:Saha.inna77@mail.ru' className='nav-icon mail-icon'>
                         <FaEnvelope />
-                    </span>
+                    </a>
                     <span className='nav-icon mobmenu'
                         onClick={e => setShowMobile(!showMobile)}
                     >
@@ -82,6 +83,12 @@ const Header = () => {
                     showMobile ?
                         <div className='mobile-menu'>
                             <div className="container">
+                                <div className="side-links  mt-4 mb-3">
+                                    <a href='mailto:Saha.inna77@mail.ru' className="side-link me-3">Написать нам</a>
+                                    <br />
+                                    <a href='tel:+79777520413' className="side-link">Позвонить</a>
+                                    {/* <div className="side-link">Информация для покупателей</div> */}
+                                </div>
                                 <p className="side-title mb-3">
                                     Каталог товаров
                                 </p>
@@ -113,7 +120,7 @@ const Header = () => {
                     {
                         cart && cart.items && cart.items.length ?
                             cart.items.map((item, i) => (
-                                <div className='cart-row' key={i}>
+                                <div className='cart cart-row' key={i}>
 
                                     <div className='col'>
                                         <img src={item.imageLink} alt="" className='cart-image' />
@@ -121,7 +128,7 @@ const Header = () => {
                                     </div>
 
 
-                                    <p className='col-2 me-2'>{item.quantity * item.retailPrice} руб.</p>
+                                    <p className='col-2 me-2'>{item.quantity * Number(item.priceVariant.price)} руб.</p>
 
                                     <div className='d-flex gap-2'>
 
@@ -163,6 +170,8 @@ const Header = () => {
                             : null
                     }
 
+                    <p>Стоимость доставки: 500 руб.</p>
+
                     {
                         cart && cart.items && cart.items.length ?
                             <div>
@@ -197,7 +206,8 @@ const Header = () => {
                                     <div className='text-center mt-3'>
                                         <button className="prime-btn"
                                             onClick={e => {
-                                                ServiceFunctions.newOrder({ ...customerData, ...cart })
+                                                ServiceFunctions.newOrder({ ...customerData, ...cart });
+                                                handleClose()
                                             }}
                                         >
                                             Оплатить

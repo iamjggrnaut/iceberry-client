@@ -3,6 +3,9 @@ import { ServiceFunctions } from '../service/serviceFunctions'
 import Modal from 'react-bootstrap/Modal'
 import AuthContext from '../service/AuthContext'
 
+import { CiEdit } from "react-icons/ci";
+
+
 const GoodsMajorTab = () => {
 
     const { authToken } = useContext(AuthContext)
@@ -41,10 +44,13 @@ const GoodsMajorTab = () => {
         }
     }
 
-    const [product, setProduct] = useState({})
+    const [product, setProduct] = useState({ priceVariants: [] })
+
+    const [priceVariant, setPriceVariant] = useState({})
+
     const createProduct = (e, obj) => {
         const values = Object.values(obj)
-        if (!values || values.length < 9) {
+        if (!values) {
         }
         else {
             ServiceFunctions.createProduct(authToken, product).then(res => {
@@ -56,7 +62,10 @@ const GoodsMajorTab = () => {
         }
     }
 
-    console.log(product);
+    const [forEdit, setForEdit] = useState()
+    const [editing, setEditing] = useState(false)
+
+    console.log(forEdit);
 
 
 
@@ -91,11 +100,13 @@ const GoodsMajorTab = () => {
                                     <span className='col-3'>Название</span>
                                     <span className='col'>Категория</span>
                                     <span className='col'>Страна</span>
-                                    <span className='col'>Цена оптовая</span>
+                                    {/* <span className='col'>Цена оптовая</span>
                                     <span className='col'>Цена розничная</span>
-                                    <span className='col'>Вес (гр.)</span>
+                                    <span className='col'>Вес (гр.)</span> */}
+                                    <span className='col-2'>Варианты цен</span>
                                     <span className='col'>На складе</span>
                                     <span className='col'>&nbsp;</span>
+                                    <span className=''>&nbsp;</span>
                                 </div>
                             }
                             {
@@ -107,11 +118,23 @@ const GoodsMajorTab = () => {
                                         <span className='fw-bold col-3'> {item.name}</span>
                                         <span className='col'> {item.category}</span>
                                         <span className='col'> {item.country}</span>
-                                        <span className='col'> {item.wholesalePrice} руб.</span>
+                                        {/* <span className='col'> {item.wholesalePrice} руб.</span>
                                         <span className='col'> {item.retailPrice} руб.</span>
-                                        <span className='col'> {item.weight}</span>
+                                        <span className='col'> {item.weight}</span> */}
+                                        <span className='col-2'>
+                                            {
+                                                item.priceVariants ?
+                                                    item.priceVariants.map((el, i) => (
+                                                        <div key={i}>
+                                                            <span>{el.weight} гр. {el.price} руб.</span>
+                                                            {/* <br /> */}
+                                                        </div>
+                                                    ))
+                                                    : '-'
+                                            }
+                                        </span>
                                         <span className='col'> {item.stock}</span>
-                                        <span className='side-link col'
+                                        <span className='side-link me-3'
                                             onClick={e => {
                                                 ServiceFunctions.deleteProduct(item.id, authToken).then(data => {
                                                     if (data) {
@@ -121,6 +144,12 @@ const GoodsMajorTab = () => {
                                             }}
                                         >
                                             удалить
+                                        </span>
+                                        <span className='side-link fs-3' onClick={e => {
+                                            setForEdit(item);
+                                            setEditing(true)
+                                        }}>
+                                            <CiEdit />
                                         </span>
                                     </div>
                                 )) || 'Товаров нет'
@@ -204,30 +233,37 @@ const GoodsMajorTab = () => {
                                         onChange={e => setProduct({ ...product, stock: Number(e.target.value) })}
                                     />
                                 </div>
+
+                                <h6 className='mt-4'>Ценовые варианты</h6>
                                 <div className='cart-field'>
-                                    <label htmlFor="">Розничная цена</label>
+                                    <label htmlFor="">Вес</label>
                                     <input
-                                        type="text"
+                                        type="number"
                                         className='input-field'
-                                        onChange={e => setProduct({ ...product, retailPrice: Number(e.target.value) })}
+                                        onChange={e => setPriceVariant({ ...priceVariant, weight: e.target.value })}
                                     />
                                 </div>
-                                <div className='cart-field'>
-                                    <label htmlFor="">Оптовая цена</label>
+                                <div className='cart-field mb-4'>
+                                    <label htmlFor="">Цена</label>
                                     <input
-                                        type="text"
+                                        type="number"
                                         className='input-field'
-                                        onChange={e => setProduct({ ...product, wholesalePrice: Number(e.target.value) })}
+                                        onChange={e => setPriceVariant({ ...priceVariant, price: e.target.value })}
                                     />
                                 </div>
-                                <div className='cart-field'>
-                                    <label htmlFor="">Вес (гр.)</label>
-                                    <input
-                                        type="text"
-                                        className='input-field'
-                                        onChange={e => setProduct({ ...product, weight: Number(e.target.value) })}
-                                    />
+
+                                <div>
+                                    <button className="neutral-btn"
+                                        onClick={e => {
+                                            setProduct({ ...product, priceVariants: [...product.priceVariants, priceVariant] });
+                                            setPriceVariant({});
+                                        }}
+                                    >
+                                        Добавить
+                                    </button>
                                 </div>
+
+
                                 <div className='cart-field'>
                                     <label htmlFor="">Страна</label>
                                     <input
@@ -286,6 +322,129 @@ const GoodsMajorTab = () => {
 
                 </Modal.Footer>
             </Modal>
+
+            {
+                forEdit ?
+                    <Modal show={editing} onHide={() => { setEditing(); setForEdit() }}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>
+                                <div>
+                                    Изменение товара
+                                </div>
+                            </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+
+                            <div>
+                                <div className='cart-field'>
+                                    <label htmlFor="">Название товара</label>
+                                    <input
+                                        type="text"
+                                        className='input-field'
+                                        defaultValue={forEdit.name}
+                                        onChange={e => setForEdit({ ...forEdit, name: e.target.value })}
+                                    />
+                                </div>
+                                <div className='cart-field'>
+                                    <label htmlFor="">Категория</label>
+                                    <select name="" id=""
+                                        defaultValue={forEdit.category}
+                                        onChange={e => setForEdit({ ...forEdit, category: e.target.value })}
+                                    >
+                                        <option value="">Выберите категорию</option>
+                                        {
+                                            categories && categories.length && categories.map((cat, i) => (
+                                                <option key={i} value={cat.name}>{cat.name}</option>
+                                            ))
+                                        }
+                                    </select>
+                                </div>
+                                <div className='cart-field'>
+                                    <label htmlFor="">Количество на складе</label>
+                                    <input
+                                        type="number"
+                                        className='input-field'
+                                        defaultValue={forEdit.stock}
+                                        onChange={e => setForEdit({ ...forEdit, stock: Number(e.target.value) })}
+                                    />
+                                </div>
+                                {/* 
+                    <h6 className='mt-4'>Ценовые варианты</h6>
+                    <div className='cart-field'>
+                        <label htmlFor="">Вес</label>
+                        <input
+                            type="number"
+                            className='input-field'
+                            onChange={e => setForEdit({ ...priceVariant, weight: e.target.value })}
+                        />
+                    </div>
+                    <div className='cart-field mb-4'>
+                        <label htmlFor="">Цена</label>
+                        <input
+                            type="number"
+                            className='input-field'
+                            onChange={e => setForEdit({ ...priceVariant, price: e.target.value })}
+                        />
+                    </div> */}
+
+                                {/* <div>
+                        <button className="neutral-btn"
+                            onClick={e => {
+                                setProduct({ ...product, priceVariants: [...product.priceVariants, priceVariant] });
+                                setPriceVariant({});
+                            }}
+                        >
+                            Добавить
+                        </button>
+                    </div> */}
+
+
+                                <div className='cart-field'>
+                                    <label htmlFor="">Страна</label>
+                                    <input
+                                        type="text"
+                                        className='input-field'
+                                        defaultValue={forEdit.country}
+                                        onChange={e => setForEdit({ ...forEdit, country: e.target.value })}
+                                    />
+                                </div>
+                                <div className='cart-field'>
+                                    <label htmlFor="">Описание</label>
+                                    <textarea
+                                        type="text"
+                                        className='input-field'
+                                        onChange={e => setForEdit({ ...forEdit, description: e.target.value })}
+                                    />
+                                </div>
+                                <div className='cart-field'>
+                                    <label htmlFor="">Ссылка на изображение</label>
+                                    <input
+                                        type="text"
+                                        className='input-field'
+                                        onChange={e => setForEdit({ ...forEdit, imageLink: e.target.value })}
+                                    />
+                                </div>
+                                <div className='text-end'>
+                                    <button
+                                        className='prime-btn mt-3'
+                                        onClick={e => {
+                                            ServiceFunctions.updateProduct(forEdit.id, forEdit, authToken);
+                                            setForEdit();
+                                            setEditing(false)
+                                        }}
+                                    >
+                                        Обновить
+                                    </button>
+                                </div>
+                            </div>
+
+
+                        </Modal.Body>
+                        <Modal.Footer>
+
+                        </Modal.Footer>
+                    </Modal> : null
+            }
 
         </div>
     )

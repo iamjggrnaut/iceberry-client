@@ -25,10 +25,11 @@ const SidePannel = ({ categories, active, setActive }) => {
                 </div>
             </div>
             <div>
-                <div className="side-links mobile-hide">
-                    <div className="side-link">О нас</div>
-                    <div className="side-link">Контакты</div>
-                    <div className="side-link">Информация для покупателей</div>
+                <div className="side-links ">
+                    <a href='mailto:Saha.inna77@mail.ru' className="side-link me-3">Написать нам</a>
+                    <br />
+                    <a href='tel:+79777520413' className="side-link">Позвонить</a>
+                    {/* <div className="side-link">Информация для покупателей</div> */}
                 </div>
             </div>
         </div>

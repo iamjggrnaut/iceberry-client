@@ -2,16 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     items: [], // Список товаров в корзине
-    totalAmount: 0, // Общая стоимость корзины
-    totalQuantity: 0, // Общее количество товаров
+    totalAmount: 500, // Общая стоимость корзины
+    totalQuantity: 0, // Общее количество товаров,
 };
 
-const calculatePrice = (item) => {
-    // Выбор цены в зависимости от количества
-    return item.quantity >= 10
-        ? item.wholesalePrice * item.quantity // Оптовая цена
-        : item.retailPrice * item.quantity;  // Розничная цена
-};
 
 const cartSlice = createSlice({
     name: 'cart',
@@ -21,23 +15,27 @@ const cartSlice = createSlice({
             const product = action.payload;
 
             // Найти, есть ли товар уже в корзине
-            const existingItem = state.items.find((item) => item.id === product.id);
+            const existingItem = state.items.find((item) => item.id === product.id && item.priceVariant.price === product.priceVariant.price);
 
             if (existingItem) {
                 // Если товар уже есть, увеличиваем его количество
                 existingItem.quantity += product.quantity;
-                existingItem.totalPrice = calculatePrice(existingItem);
+                existingItem.totalPrice = existingItem.quantity * Number(product.priceVariant.price);
             } else {
                 // Если товара нет, добавляем его
+                const product = action.payload;
+
+                console.log(product);
+
                 state.items.push({
                     ...product,
                     quantity: product.quantity, // Количество
-                    totalPrice: calculatePrice(product), // Рассчитываем начальную стоимость
+                    totalPrice: product.quantity * Number(product.priceVariant.price), // Рассчитываем начальную стоимость
                 });
             }
 
             // Пересчитываем общую стоимость и количество
-            state.totalAmount = state.items.reduce((sum, item) => sum + item.totalPrice, 0);
+            state.totalAmount = 500 + state.items.reduce((sum, item) => sum + item.totalPrice, 0);
             state.totalQuantity = state.items.reduce((sum, item) => sum + item.quantity, 0);
         },
         removeItem: (state, action) => {
@@ -49,7 +47,7 @@ const cartSlice = createSlice({
             }
 
             // Пересчитываем общую стоимость и количество
-            state.totalAmount = state.items.reduce((sum, item) => sum + item.totalPrice, 0);
+            state.totalAmount = 500 + state.items.reduce((sum, item) => sum + item.totalPrice, 0);
             state.totalQuantity = state.items.reduce((sum, item) => sum + item.quantity, 0);
         },
         updateQuantity: (state, action) => {
@@ -60,17 +58,17 @@ const cartSlice = createSlice({
             if (existingItem) {
                 // Обновляем количество
                 existingItem.quantity = quantity;
-                existingItem.totalPrice = calculatePrice(existingItem);
+                existingItem.totalPrice = existingItem.quantity * existingItem.priceVariant.price;
             }
 
             // Пересчитываем общую стоимость и количество
-            state.totalAmount = state.items.reduce((sum, item) => sum + item.totalPrice, 0);
+            state.totalAmount = 500 + state.items.reduce((sum, item) => sum + item.totalPrice, 0);
             state.totalQuantity = state.items.reduce((sum, item) => sum + item.quantity, 0);
         },
         clearCart: (state) => {
             // Очищаем корзину
             state.items = [];
-            state.totalAmount = 0;
+            state.totalAmount = 500;
             state.totalQuantity = 0;
         },
     },

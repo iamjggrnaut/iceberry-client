@@ -8,6 +8,7 @@ import { addItem, removeItem, clearCart } from '../redux/features/cartSlice';
 import Modal from 'react-bootstrap/Modal';
 import { ServiceFunctions } from '../service/serviceFunctions';
 import AuthContext from '../service/AuthContext';
+import { Link } from 'react-router-dom';
 
 
 const ShopPage = () => {
@@ -33,7 +34,9 @@ const ShopPage = () => {
         dispatch(addItem({ ...product, quantity: quantity }));
     };
 
-    console.log(cart);
+
+    const [selectedPrice, setSelectedPrice] = useState()
+
 
 
 
@@ -76,7 +79,7 @@ const ShopPage = () => {
 
             {
                 detailed &&
-                <Modal show={show} onHide={handleClose}>
+                <Modal show={show} onHide={() => { handleClose(); setSelectedPrice() }}>
                     <Modal.Header closeButton>
                         <Modal.Title>{detailed.name}</Modal.Title>
                     </Modal.Header>
@@ -85,42 +88,84 @@ const ShopPage = () => {
                         <p className="mt-2 mb-1">Страна: {detailed.country}</p>
                         <p className="mt-2 mb-1">Вес: {detailed.weight} гр.</p>
                         <p className="mt-2 mb-1">Описание: {detailed.description}</p>
-                        <div className="card-price mt-2">
-                            <div className="col"><span>Розница: </span><span className='fw-bold'>{detailed.retailPrice} руб.</span></div>
-                            <div className="col"><span>Опт: </span><span className='fw-bold'>{detailed.wholesalePrice} руб.</span></div>
-                        </div>
-                        <p className="mt-2 sm-text">
-                            *Оптповая цена применима при заказе от 10 единиц товара.
-                        </p>
-                        <div className="counter-buttons">
-                            <button className='secondary-btn'
-                                onClick={e => {
-                                    if (quantity === 0) {
-                                        e.preventDefault()
+
+                        <p className="mt-2 mb-1 fw-bold">Цены:</p>
+                        {
+                            detailed.priceVariants && detailed.priceVariants.length ?
+                                <div className='mt-2 mb-1 row gap-2 ps-2 mb-3'>
+                                    {
+                                        detailed.priceVariants.map((el, i) => (
+                                            <span key={i} className={el === selectedPrice ? 'price-tag col-2 activated' : 'price-tag col-2'}
+                                                onClick={e => setSelectedPrice(el)}
+                                            >
+                                                {el.weight} гр.
+                                                <span className='fw-bold'>
+                                                    {el.price} руб.
+                                                </span>
+                                            </span>
+                                        ))
                                     }
-                                    setQuantity(quantity - 1)
-                                }}
-                            >
-                                -
-                            </button>
-                            {
-                                <div className="counter-num">
-                                    {quantity}
                                 </div>
-                            }
-                            <button className='secondary-btn'
-                                onClick={e => {
-                                    setQuantity(quantity + 1)
-                                }}
-                            >
-                                +
-                            </button>
-                        </div>
+                                : null
+                        }
+
+                        {
+                            selectedPrice &&
+                            <div className="counter-buttons">
+                                <button className='secondary-btn'
+                                    onClick={e => {
+                                        if (quantity === 0) {
+                                            e.preventDefault()
+                                        }
+                                        setQuantity(quantity - 1)
+                                    }}
+                                >
+                                    -
+                                </button>
+                                {
+                                    <div className="counter-num">
+                                        {quantity}
+                                    </div>
+                                }
+                                <button className='secondary-btn'
+                                    onClick={e => {
+                                        setQuantity(quantity + 1)
+                                    }}
+                                >
+                                    +
+                                </button>
+                            </div>
+                        }
                     </Modal.Body>
                     <Modal.Footer>
-                        <button className='prime-btn' onClick={() => { addToCart(detailed); setDetailed(null); setQuantity(1) }}>
-                            В корзину
-                        </button>
+
+                        {
+                            detailed && detailed.priceVariants && detailed.priceVariants.length ?
+                                <button className='prime-btn'
+                                    onClick={(e) => {
+                                        if (!selectedPrice) {
+                                            e.preventDefault()
+                                        }
+                                        else {
+                                            addToCart({ ...detailed, priceVariant: selectedPrice });
+                                            setDetailed(null);
+                                            setQuantity(1)
+                                            setSelectedPrice()
+                                        }
+                                    }}
+                                >
+                                    В корзину
+                                </button>
+                                :
+                                <Link to={'tel:+79994517577'} className='prime-btn side-link' style={{ textDecoration: 'none' }}
+                                    onClick={() => {
+
+                                    }}
+                                >
+                                    Запросить цену
+                                </Link>
+                        }
+
                     </Modal.Footer>
                 </Modal>
             }

@@ -10,7 +10,7 @@ const OrdersMajorTab = () => {
     const [orders, setOrders] = useState()
 
     useEffect(() => {
-        ServiceFunctions.getAllOrders(authToken).then(data => setOrders(data))
+        ServiceFunctions.getAllOrders(authToken).then(data => data && data.length ? setOrders(data.reverse()) : setOrders(data))
     }, [])
 
     const [detailed, setDetailed] = useState(null)
@@ -25,7 +25,7 @@ const OrdersMajorTab = () => {
 
             <p className="fw-bold">Все заказы</p>
 
-            <div className='d-flex sm-text'
+            <div className='d-flex sm-text hide'
                 style={{
                     fontWeight: 'bold',
                     padding: '8px 0px',
@@ -37,11 +37,12 @@ const OrdersMajorTab = () => {
                 <span className='col-3'>Телефон</span>
                 <span className='col-2'>Email</span>
                 <span className='col'>Общая стоимость</span>
+                <span className='col'>Дата</span>
             </div>
 
             {
                 orders && orders.length && orders.map((item, i) => (
-                    <div className='d-flex' key={i}
+                    <div className='d-flex order-row' key={i}
                         style={{
                             cursor: 'pointer',
                             borderBottom: '1px solid var(--secondary)',
@@ -57,6 +58,7 @@ const OrdersMajorTab = () => {
                         <span className='col-3'>{item.phone}</span>
                         <span className='col-2'>{item.email}</span>
                         <span className='col'>{item.totalAmount} руб.</span>
+                        <span className='col'>{new Date(item.createdAt).toLocaleDateString()}</span>
                     </div>
                 ))
             }
@@ -73,13 +75,13 @@ const OrdersMajorTab = () => {
                     <Modal.Body>
                         {
                             detailed?.items?.length ?
-                                detailed.items.map((item) => (
-                                    <div className='d-flex gap-3 align-items-center'>
+                                detailed.items.map((item, i) => (
+                                    <div key={i} className='d-flex gap-3 align-items-center mb-3' style={{ fontSize: 14 }}>
                                         <img src={item.imageLink} alt="" className="cart-image" />
                                         <span>{item.name}</span>
-                                        <span>{item.quantity} шт.</span>
-                                        <span>{item.wholesalePrice} руб.</span>
-                                        <span>{item.retailPrice} руб.</span>
+                                        <span>{item.quantity} шт. по</span>
+                                        <span>{item.priceVariant.weight} гр.</span>
+                                        <span>{item.priceVariant.price} руб.</span>
                                     </div>
                                 ))
                                 : null
