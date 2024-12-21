@@ -251,6 +251,16 @@ const GoodsMajorTab = () => {
                                         onChange={e => setPriceVariant({ ...priceVariant, price: e.target.value })}
                                     />
                                 </div>
+                                <div className='mb-3'>
+                                    {
+                                        product.priceVariants.map((item, i) => (
+                                            <div className="price-tag">
+                                                <span>{item.weight} гр.</span>
+                                                <span>{item.price} руб.</span>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
 
                                 <div>
                                     <button className="neutral-btn"
