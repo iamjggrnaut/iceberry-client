@@ -128,7 +128,7 @@ const Header = () => {
                                     </div>
 
 
-                                    <p className='col-2 me-2'>{item.quantity * Number(item.priceVariant.price)} руб.</p>
+                                    <p className='col-2 me-2'>{item.quantity * Number(item.priceVariant.price).toFixed(2)} руб.</p>
 
                                     <div className='d-flex gap-2'>
 
@@ -179,7 +179,7 @@ const Header = () => {
                                     {
                                         cart && cart.items && cart.items.length ?
                                             <div className='d-flex justify-content-between mb-3'>
-                                                <span className="fw-bold">Итого: {cart.totalAmount} руб.</span>
+                                                <span className="fw-bold">Итого: {Number(cart.totalAmount).toFixed(2)} руб.</span>
                                                 <span className="prime-text-link" onClick={e => dispatch(clearCart())}>очистить корзину</span>
                                             </div>
                                             : null
