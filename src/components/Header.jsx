@@ -128,7 +128,7 @@ const Header = () => {
                                     </div>
 
 
-                                    <p className='col-2 me-2'>{item.quantity * Number(item.priceVariant.price).toFixed(2)} руб.</p>
+                                    <p className='col-2 me-2'>{Number(item.quantity * Number(item.priceVariant.price)).toFixed(2)} руб.</p>
 
                                     <div className='d-flex gap-2'>
 
