@@ -235,6 +235,7 @@ const GoodsMajorTab = () => {
                                 </div>
 
                                 <h6 className='mt-4'>Ценовые варианты</h6>
+                                <span className="sm-text">Цену и вес вводить через ТОЧКУ</span>
                                 <div className='cart-field'>
                                     <label htmlFor="">Вес</label>
                                     <input
