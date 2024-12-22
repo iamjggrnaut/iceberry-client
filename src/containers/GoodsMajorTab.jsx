@@ -4,6 +4,8 @@ import Modal from 'react-bootstrap/Modal'
 import AuthContext from '../service/AuthContext'
 
 import { CiEdit } from "react-icons/ci";
+import { staticUrl, URL } from '../service/config';
+import axios from 'axios';
 
 
 const GoodsMajorTab = () => {
@@ -48,6 +50,67 @@ const GoodsMajorTab = () => {
 
     const [priceVariant, setPriceVariant] = useState({})
 
+
+
+
+    const [image, setImage] = useState(null);
+    const [imageUrl, setImageUrl] = useState(null)
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setImage(file);
+    };
+
+
+
+    const handleUpload = async () => {
+        if (!image) {
+            return alert("Выберите файл")
+        }
+        const formData = new FormData();
+        formData.append('static', image);
+
+        try {
+            const response = await axios.post(URL + '/uploadFile', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            console.log(response.data);
+            setProduct({ ...product, imageLink: staticUrl + response.data })
+        } catch (error) {
+            console.error("Ошибка загрузки файла:", error);
+            console.log(error);
+
+            alert("Ошибка загрузки файла")
+        }
+    }
+
+    const handleUploadEdit = async () => {
+        if (!image) {
+            return alert("Выберите файл")
+        }
+        const formData = new FormData();
+        formData.append('static', image);
+
+        try {
+            const response = await axios.post(URL + '/uploadFile', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            console.log(response.data);
+            setForEdit({ ...forEdit, imageLink: staticUrl + response.data })
+        } catch (error) {
+            console.error("Ошибка загрузки файла:", error);
+            console.log(error);
+
+            alert("Ошибка загрузки файла")
+        }
+    }
+
     const createProduct = (e, obj) => {
         const values = Object.values(obj)
         if (!values) {
@@ -56,7 +119,13 @@ const GoodsMajorTab = () => {
             ServiceFunctions.createProduct(authToken, product).then(res => {
                 if (res) {
                     ServiceFunctions.getAllProducts().then(data => setGoods(data));
-                    handleClose()
+                    handleClose();
+                    setProduct({
+                        priceVariants: [],
+                    });
+                    setPriceVariant({ weight: '', price: '' })
+                    setImage(null)
+                    setImageUrl(null)
                 }
             })
         }
@@ -291,14 +360,21 @@ const GoodsMajorTab = () => {
                                         onChange={e => setProduct({ ...product, description: e.target.value })}
                                     />
                                 </div>
-                                <div className='cart-field'>
+                                {/* <div className='cart-field'>
                                     <label htmlFor="">Ссылка на изображение</label>
                                     <input
                                         type="text"
                                         className='input-field'
                                         onChange={e => setProduct({ ...product, imageLink: e.target.value })}
                                     />
+                                </div> */}
+
+                                <div className='cart-field'>
+                                    <label htmlFor="">Изображение</label>
+                                    <input type="file" onChange={handleFileChange} />
+                                    {image && <button type='button' className='neutral-btn' onClick={handleUpload} >Загрузить изображение</button>}
                                 </div>
+
                                 <div className='text-end'>
                                     <button
                                         className='prime-btn mt-3'
@@ -427,6 +503,16 @@ const GoodsMajorTab = () => {
                                         onChange={e => setForEdit({ ...forEdit, description: e.target.value })}
                                     />
                                 </div>
+
+
+                                <div className='cart-field'>
+                                    <label htmlFor="">Изображение</label>
+                                    <input type="file" onChange={handleFileChange} />
+                                    {image && <button type='button' className='neutral-btn' onClick={handleUploadEdit} >Загрузить изображение</button>}
+                                </div>
+
+
+                                {/* 
                                 <div className='cart-field'>
                                     <label htmlFor="">Ссылка на изображение</label>
                                     <input
@@ -434,7 +520,7 @@ const GoodsMajorTab = () => {
                                         className='input-field'
                                         onChange={e => setForEdit({ ...forEdit, imageLink: e.target.value })}
                                     />
-                                </div>
+                                </div> */}
                                 <div className='text-end'>
                                     <button
                                         className='prime-btn mt-3'
