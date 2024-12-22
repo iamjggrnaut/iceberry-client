@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 
 const ShopPage = () => {
 
-    const { data, setData, categories, setCategories, active, setActive, setDetailed, pageAmount, detailed, chunk, pageNum } = useContext(AuthContext)
+    const { data, setData, categories, setCategories, setPageNum, active, setActive, setDetailed, pageAmount, detailed, chunk, pageNum } = useContext(AuthContext)
 
     const [show, setShow] = useState(false)
     const handleShow = () => setShow(true)
