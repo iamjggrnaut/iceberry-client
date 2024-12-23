@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const SidePannel = ({ categories, active, setActive }) => {
 
@@ -26,6 +27,8 @@ const SidePannel = ({ categories, active, setActive }) => {
             </div>
             <div>
                 <div className="side-links ">
+                    <Link to={'/legal'} className="side-link me-3">Правовая информация</Link>
+                    <br />
                     <a href='mailto:Saha.inna77@mail.ru' className="side-link me-3">Написать нам</a>
                     <br />
                     <a href='tel:+79777520413' className="side-link">Позвонить</a>
