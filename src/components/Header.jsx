@@ -84,7 +84,7 @@ const Header = () => {
                         <div className='mobile-menu'>
                             <div className="container">
                                 <div className="side-links  mt-4 mb-3">
-                                    <Link to={'/legal'} className="side-link me-3">Правовая информация</Link>
+                                    <Link to={'/legal'} className="side-link me-3" onClick={() => setShowMobile(false)}>Правовая информация</Link>
                                     <br />
                                     <a href='mailto:Saha.inna77@mail.ru' className="side-link me-3">Написать нам</a>
                                     <br />
