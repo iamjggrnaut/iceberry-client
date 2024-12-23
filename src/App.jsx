@@ -17,7 +17,7 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<ShopPage />} />
-          <Route path='/*' element={<Navigate to={'/'} replace />} />
+          {/* <Route path='/*' element={<Navigate to={'/'} replace />} /> */}
           <Route path='/admin/login' element={<LoginPage />} />
           <Route path='/admin' element={<Navigate to={'/admin/login'} replace />} />
         </Routes >
