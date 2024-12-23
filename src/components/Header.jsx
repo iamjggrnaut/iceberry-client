@@ -8,7 +8,7 @@ import Modal from 'react-bootstrap/Modal'
 import { addItem, removeItem, clearCart, updateQuantity } from '../redux/features/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdDelete } from "react-icons/md";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ServiceFunctions } from '../service/serviceFunctions';
 
 import { IoIosMenu } from "react-icons/io";
@@ -84,6 +84,8 @@ const Header = () => {
                         <div className='mobile-menu'>
                             <div className="container">
                                 <div className="side-links  mt-4 mb-3">
+                                    <Link to={'/legal'} className="side-link me-3">Правовая информация</Link>
+                                    <br />
                                     <a href='mailto:Saha.inna77@mail.ru' className="side-link me-3">Написать нам</a>
                                     <br />
                                     <a href='tel:+79777520413' className="side-link">Позвонить</a>
