@@ -7,6 +7,8 @@ import Header from './components/Header'
 import AdminPage from './pages/AdminPage'
 import LoginPage from './pages/LoginPage'
 import LegalInfo from './pages/LegalInfo'
+import Delivery from './pages/Delivery'
+import About from './pages/About'
 
 function App() {
 
@@ -19,8 +21,8 @@ function App() {
         <Routes>
           <Route path='/' element={<ShopPage />} />
           <Route path='/legal' element={<LegalInfo />} />
-          <Route path='/delivery' element={<LegalInfo />} />
-          <Route path='/about' element={<LegalInfo />} />
+          <Route path='/delivery' element={<Delivery />} />
+          <Route path='/about' element={<About />} />
           <Route path='/*' element={<Navigate to={'/'} replace />} />
           <Route path='/admin/login' element={<LoginPage />} />
           <Route path='/admin' element={<Navigate to={'/admin/login'} replace />} />
@@ -34,9 +36,9 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<ShopPage />} />
-          <Route path='/delivery' element={<LegalInfo />} />
+          <Route path='/delivery' element={<Delivery />} />
           <Route path='/about' element={<LegalInfo />} />
-          <Route path='/legal' element={<LegalInfo />} />
+          <Route path='/legal' element={<About />} />
           <Route path='/admin' element={<AdminPage />} />
           <Route path='/admin/login' element={<Navigate to={'/admin'} />} />
         </Routes >
