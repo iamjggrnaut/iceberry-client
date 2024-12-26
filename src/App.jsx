@@ -37,8 +37,8 @@ function App() {
         <Routes>
           <Route path='/' element={<ShopPage />} />
           <Route path='/delivery' element={<Delivery />} />
-          <Route path='/about' element={<LegalInfo />} />
-          <Route path='/legal' element={<About />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/legal' element={<LegalInfo />} />
           <Route path='/admin' element={<AdminPage />} />
           <Route path='/admin/login' element={<Navigate to={'/admin'} />} />
         </Routes >
