@@ -9,6 +9,7 @@ import LoginPage from './pages/LoginPage'
 import LegalInfo from './pages/LegalInfo'
 import Delivery from './pages/Delivery'
 import About from './pages/About'
+import Contact from './pages/Contact'
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
           <Route path='/legal' element={<LegalInfo />} />
           <Route path='/delivery' element={<Delivery />} />
           <Route path='/about' element={<About />} />
+          <Route path='/contact' element={<Contact />} />
           <Route path='/*' element={<Navigate to={'/'} replace />} />
           <Route path='/admin/login' element={<LoginPage />} />
           <Route path='/admin' element={<Navigate to={'/admin/login'} replace />} />
@@ -38,6 +40,7 @@ function App() {
           <Route path='/' element={<ShopPage />} />
           <Route path='/delivery' element={<Delivery />} />
           <Route path='/about' element={<About />} />
+          <Route path='/contact' element={<Contact />} />
           <Route path='/legal' element={<LegalInfo />} />
           <Route path='/admin' element={<AdminPage />} />
           <Route path='/admin/login' element={<Navigate to={'/admin'} />} />

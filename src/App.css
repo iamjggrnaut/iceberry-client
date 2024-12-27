@@ -91,6 +91,17 @@
   cursor: pointer;
 }
 
+.side-link-a {
+  font-weight: 600;
+  color: var(--primary);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.side-link-a:hover {
+  color: var(--primary);
+}
+
 .categories {
   overflow-y: scroll;
   max-height: 70vh;
