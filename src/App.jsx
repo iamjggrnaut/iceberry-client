@@ -10,6 +10,7 @@ import LegalInfo from './pages/LegalInfo'
 import Delivery from './pages/Delivery'
 import About from './pages/About'
 import Contact from './pages/Contact'
+import Footer from './components/Footer'
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
           <Route path='/admin/login' element={<LoginPage />} />
           <Route path='/admin' element={<Navigate to={'/admin/login'} replace />} />
         </Routes >
+        <Footer />
       </div>
     )
   }
@@ -45,6 +47,7 @@ function App() {
           <Route path='/admin' element={<AdminPage />} />
           <Route path='/admin/login' element={<Navigate to={'/admin'} />} />
         </Routes >
+        <Footer />
       </div>
     )
   }
