@@ -86,10 +86,11 @@ const Header = () => {
                                 <div className="side-links  mt-4 mb-3">
                                     <Link to={'/about'} className="side-link me-3" onClick={() => setShowMobile(false)}>О компании</Link> <br />
                                     <Link to={'/legal'} className="side-link me-3" onClick={() => setShowMobile(false)}>Правовая информация</Link><br />
-                                    <a href='mailto:Saha.inna77@mail.ru' className="side-link me-3">Написать нам</a>
-                                    <br />
-                                    <a href='tel:+79777520413' className="side-link">Позвонить</a> <br />
                                     <Link to={'/delivery'} className="side-link me-3" onClick={() => setShowMobile(false)}>Доставка</Link> <br />
+                                    <Link to={'/contact'} className="side-link me-3" onClick={() => setShowMobile(false)}>Контакты</Link> <br />
+                                    {/* <a href='mailto:Saha.inna77@mail.ru' className="side-link me-3">Написать нам</a>
+                                    <br />
+                                    <a href='tel:+79777520413' className="side-link">Позвонить</a> <br /> */}
                                     {/* <div className="side-link">Информация для покупателей</div> */}
                                 </div>
                                 <p className="side-title mb-3">
