@@ -57,10 +57,10 @@ const Header = () => {
                     <span className='fs-3 fw-bold' onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>ICEBERRY SHOP</span>
                 </h1>
                 <div className='navlinks'>
-                    <a href='tel:+79777520413' className='nav-icon phone-icon'>
+                    <a href='tel:+79913403537' className='nav-icon phone-icon'>
                         <HiPhone />
                     </a>
-                    <a href='mailto:Saha.inna77@mail.ru' className='nav-icon mail-icon'>
+                    <a href='mailto:iceberryshop@mail.ru' className='nav-icon mail-icon'>
                         <FaEnvelope />
                     </a>
                     <span className='nav-icon mobmenu'
