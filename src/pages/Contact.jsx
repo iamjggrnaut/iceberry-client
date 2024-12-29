@@ -12,7 +12,7 @@ const Contact = () => {
                 <a href="https://t.me/iceberry_y" target='_blank' className="side-link-a">Telegram</a>
                 <div className="d-flex gap-2">
                     <p>Электронная почта:</p>
-                    <a href="mailto:iceberryshop@mail.ru" className="side-link-a" target='_blank'>Email</a>
+                    <p>iceberryshop@mail.ru</p>
                 </div>
                 <p className="mb-2 mt-2">
                     Отдел работы с юридическими лицами:
