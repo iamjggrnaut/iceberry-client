@@ -1,4 +1,5 @@
 import React from 'react'
+import logos from '../assets/logo3h.png'
 
 const Footer = () => {
 
@@ -14,6 +15,7 @@ const Footer = () => {
                     БИК: 044525593 <br /> Кор. счёт : 30101810200000000593 <br />
                     Адрес: Улица Ленина, д. 90, Московская область, р-н Ногинск, г. Ногинск
                 </span>
+                <img className='mt-3' src={logos} alt="" />
             </div>
         </div>
     )

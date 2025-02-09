@@ -11,6 +11,7 @@ import Delivery from './pages/Delivery'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import Footer from './components/Footer'
+import PaymentDetails from './pages/PaymentDetails'
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
           <Route path='/about' element={<About />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/*' element={<Navigate to={'/'} replace />} />
+          <Route path='/payment-details' element={<PaymentDetails />} />
           <Route path='/admin/login' element={<LoginPage />} />
           <Route path='/admin' element={<Navigate to={'/admin/login'} replace />} />
         </Routes >
@@ -45,6 +47,7 @@ function App() {
           <Route path='/contact' element={<Contact />} />
           <Route path='/legal' element={<LegalInfo />} />
           <Route path='/admin' element={<AdminPage />} />
+          <Route path='/payment-details' element={<PaymentDetails/>} />
           <Route path='/admin/login' element={<Navigate to={'/admin'} />} />
         </Routes >
         <Footer />

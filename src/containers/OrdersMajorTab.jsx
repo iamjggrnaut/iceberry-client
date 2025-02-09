@@ -38,6 +38,7 @@ const OrdersMajorTab = () => {
                 <span className='col-2'>Email</span>
                 <span className='col'>Общая стоимость</span>
                 <span className='col'>Дата</span>
+                <span className='col'>&nbsp;</span>
             </div>
 
             {
@@ -59,6 +60,11 @@ const OrdersMajorTab = () => {
                         <span className='col-2'>{item.email}</span>
                         <span className='col'>{item.totalAmount} руб.</span>
                         <span className='col'>{new Date(item.createdAt).toLocaleDateString()}</span>
+                        <span className='col error'
+                            onClick={e => ServiceFunctions.deleteProduct()}
+                        >
+                            удалить
+                            </span>
                     </div>
                 ))
             }
