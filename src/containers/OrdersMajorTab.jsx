@@ -59,11 +59,12 @@ const OrdersMajorTab = () => {
             <span className="col-3">{item.phone}</span>
             <span className="col-2">{item.email}</span>
             <span className="col">{item.totalAmount} руб.</span>
-            <span style={{marginLeft: 8}} className="col">
+            <span style={{ marginLeft: 8 }} className="col">
               {new Date(item.createdAt).toLocaleDateString()}
             </span>
             <span
-              style={{marginLeft: 8}} className="col error"
+              style={{ marginLeft: 8 }}
+              className="col error"
               onClick={(e) => {
                 setDetailed(item);
                 handleShow();
@@ -73,9 +74,7 @@ const OrdersMajorTab = () => {
             </span>
             <span
               className="col error"
-              onClick={(e) =>
-                ServiceFunctions.deleteProduct(item.id, authToken)
-              }
+              onClick={(e) => ServiceFunctions.deleteOrder(item.id, authToken)}
             >
               удалить
             </span>
