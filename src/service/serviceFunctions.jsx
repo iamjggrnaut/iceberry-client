@@ -114,7 +114,7 @@ export const ServiceFunctions = {
   },
 
   deleteOrder: async (id, token) => {
-    const res = await fetch(URL + "/delete/order/" + id, {
+    const res = await fetch(URL + "/order/delete/order/" + id, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
