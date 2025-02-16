@@ -101,6 +101,7 @@ const ShopPage = () => {
           <Modal.Body>
             <img className="card-image" src={detailed.imageLink} alt="" />
             <p className="mt-2 mb-1">Страна: {detailed.country}</p>
+            <p className="mt-2 mb-1">Количество на складе: {detailed.stock}</p>
             {/* <p className="mt-2 mb-1">Вес: {detailed.weight} гр.</p> */}
             <p className="mt-2 mb-1">Описание: {detailed.description}</p>
 

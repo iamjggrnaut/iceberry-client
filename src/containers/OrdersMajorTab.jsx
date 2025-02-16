@@ -2,6 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { ServiceFunctions } from "../service/serviceFunctions";
 import AuthContext from "../service/AuthContext";
 import Modal from "react-bootstrap/Modal";
+import { FaRegEye } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+
 
 const OrdersMajorTab = () => {
   const { authToken } = useContext(AuthContext);
@@ -20,6 +23,8 @@ const OrdersMajorTab = () => {
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
+  console.log(orders);
+
   return (
     <div className="major-tab">
       <p className="fw-bold">Все заказы</p>
@@ -33,11 +38,12 @@ const OrdersMajorTab = () => {
         }}
       >
         <span className="col">Имя</span>
-        <span className="col-3">Адрес</span>
-        <span className="col-3">Телефон</span>
+        <span className="col-2">Адрес</span>
+        <span className="col-2">Телефон</span>
         <span className="col-2">Email</span>
         <span className="col">Общая стоимость</span>
         <span className="col">Дата</span>
+        <span className="col">Статус</span>
         <span className="col">&nbsp;</span>
         <span className="col">&nbsp;</span>
       </div>
@@ -46,37 +52,53 @@ const OrdersMajorTab = () => {
         orders.length &&
         orders.map((item, i) => (
           <div
-            className="d-flex order-row"
+            className="d-flex order-row align-items-center"
             key={i}
             style={{
               cursor: "pointer",
               borderBottom: "1px solid var(--secondary)",
               paddingBottom: "8px",
+              fontSize: 14,
             }}
           >
             <span className="col">{item.customerName}</span>
-            <span className="col-3">{item.address}</span>
-            <span className="col-3">{item.phone}</span>
+            <span className="col-2">{item.address}</span>
+            <span className="col-2">{item.phone}</span>
             <span className="col-2">{item.email}</span>
             <span className="col">{item.totalAmount} руб.</span>
             <span style={{ marginLeft: 8 }} className="col">
               {new Date(item.createdAt).toLocaleDateString()}
             </span>
+            <span className="col">
+              {item.paymentStatus === "Pending" ? (
+                <button
+                  className="prime-btn"
+                  style={{ fontSize: 12, padding: "4px 8px", marginTop: 4 }}
+                  onClick={(e) =>
+                    ServiceFunctions.updateStatus(item.id, authToken)
+                  }
+                >
+                  Отгрузить
+                </button>
+              ) : (
+                "Отгружен"
+              )}
+            </span>
             <span
               style={{ marginLeft: 8 }}
-              className="col error"
+              className="col primary fs-5 text-end me-3"
               onClick={(e) => {
                 setDetailed(item);
                 handleShow();
               }}
             >
-              детали
+              <FaRegEye />
             </span>
             <span
-              className="col error"
+              className="col error fs-5"
               onClick={(e) => ServiceFunctions.deleteOrder(item.id, authToken)}
             >
-              удалить
+              <MdDelete />
             </span>
           </div>
         ))}
@@ -104,7 +126,9 @@ const OrdersMajorTab = () => {
                     <span>{item.name}</span>
                     <span>{item.quantity} шт. по</span>
                     <span>{item.priceVariant.weight} гр.</span>
-                    <span>{item.priceVariant.price} руб.</span>
+                    <span>
+                      {Number(item.priceVariant.price) * item.quantity} руб.
+                    </span>
                   </div>
                 ))
               : null}

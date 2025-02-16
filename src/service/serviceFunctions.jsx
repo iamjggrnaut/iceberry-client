@@ -20,6 +20,19 @@ export const ServiceFunctions = {
     }
   },
 
+  updateStatus: async (orderId, authToken) => {
+    const response = await fetch(`${URL}/order/${orderId}/payment`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+        authorization: "Bearer " + authToken,
+      },
+      body: JSON.stringify({ paymentStatus: "Paid" }),
+    });
+    const data = await response.json()
+    return data
+  },
+
   getCategories: async () => {
     const res = await fetch(URL + "/category/all", {
       method: "GET",

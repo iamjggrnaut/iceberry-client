@@ -173,6 +173,13 @@ const Header = () => {
 
                   <p className="col-2 me-2">
                     {Number(
+                      (item.quantity * Number(item.priceVariant.weight)) / 1000
+                    ).toFixed(2)}{" "}
+                    кг.
+                  </p>
+
+                  <p className="col-2 me-2">
+                    {Number(
                       item.quantity * Number(item.priceVariant.price)
                     ).toFixed(2)}{" "}
                     руб.
@@ -292,7 +299,7 @@ const Header = () => {
                     className="prime-btn"
                     onClick={(e) => {
                       if (!customerData.email) {
-                          setError("Заполните все поля");
+                        setError("Заполните все поля");
                         e.preventDefault();
                         return;
                       }
@@ -307,6 +314,12 @@ const Header = () => {
                         return;
                       }
                       if (!error && customerData.email) {
+                        try{
+                          localStorage.removeItem('order')
+                        }catch(error){
+                          console.log(error);
+                        }
+                        localStorage.setItem('order', JSON.stringify({...customerData, ...cart}))
                         handleClose();
                         navigate("/payment-details");
                         setError();
@@ -316,8 +329,12 @@ const Header = () => {
                     К оплате
                   </button>
                   <div>
-                  <p className="error mt-2 mb-0">{JSON.stringify(error?.response?.data?.message)}</p>
-                  <p className="error">Убедитесь, что Вы корректно заполнили все поля</p>
+                    <p className="error mt-2 mb-0">
+                      {JSON.stringify(error?.response?.data?.message)}
+                    </p>
+                    <p className="error">
+                      Убедитесь, что Вы корректно заполнили все поля
+                    </p>
                   </div>
                 </div>
               </div>
